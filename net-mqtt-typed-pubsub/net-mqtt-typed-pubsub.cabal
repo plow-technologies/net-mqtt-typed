@@ -1,0 +1,115 @@
+cabal-version:       2.4
+name:                net-mqtt-typed-pubsub
+version:             0.6.0.0
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              Plow Technologies LLC
+maintainer:          alberto.valverde@plowtech.net
+copyright:           2020 Plow Technologies LLC
+extra-source-files:  CHANGELOG.md
+
+common warnings
+  ghc-options:
+    -Wall
+    -Werror
+    -Wincomplete-uni-patterns
+    -Wincomplete-record-updates
+    -Wredundant-constraints
+  if impl(ghc >= 9)
+    ghc-options: -Wunused-packages
+
+library
+  import: warnings
+  exposed-modules:
+    Network.MQTT.Typed.Publisher
+    Network.MQTT.Typed.Publisher.Request
+    Network.MQTT.Typed.Subscriber
+    Network.MQTT.Typed.Subscriber.Error
+    Network.MQTT.Typed.Subscriber.PublishResponse
+    Network.MQTT.Typed.Subscriber.Router
+    Network.MQTT.Typed.Subscriber.Topic
+  build-depends:
+      base >=4.13.0.0
+    , net-mqtt
+    , net-mqtt-extra
+    , net-mqtt-typed
+    , exceptions
+    , deepseq
+    , safe-exceptions
+    , mtl
+    , containers
+    , text
+    , bytestring
+    , unliftio-core
+    , singletons
+    , random-bytestring
+    , stm
+    , async
+
+
+  if impl(ghc >= 9)
+    build-depends: singletons-base
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite spec
+  import: warnings
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+  hs-source-dirs:
+      spec
+  ghc-options: -Wall -Werror -Wincomplete-uni-patterns -Wincomplete-record-updates
+  build-depends:
+      base
+    , net-mqtt-typed
+    , net-mqtt-typed-pubsub
+    , net-mqtt
+    , bytestring
+    , hspec
+  other-modules:
+    Network.MQTT.Typed.SubscriberSpec
+    Network.MQTT.Typed.ApiUnderTest
+  build-tool-depends: hspec-discover:hspec-discover
+  default-language: Haskell2010
+
+executable net-mqtt-typed-demo
+  import: warnings
+  main-is:          Demo.hs
+  hs-source-dirs:   examples
+  build-depends:
+    base >=4.13.0.0,
+    net-mqtt-typed,
+    net-mqtt-typed-pubsub,
+    net-mqtt-extra,
+    aeson
+  ghc-options:      -threaded
+  default-language: Haskell2010
+
+test-suite net-mqtt-typed-integration-test
+  import: warnings
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  hs-source-dirs: integration-test
+  ghc-options:
+    -threaded
+    -rtsopts
+    -with-rtsopts=-N
+  build-depends:
+    base,
+    aeson,
+    net-mqtt-extra,
+    net-mqtt-typed,
+    net-mqtt-typed-pubsub,
+    async,
+    text,
+    plow-log,
+    plow-log-async,
+    hspec,
+    typed-process,
+    temporary,
+    filepath,
+    exceptions,
+    port-utils,
+    mtl,
+    retry
