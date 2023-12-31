@@ -40,6 +40,7 @@ module Network.MQTT.Typed.API
     WithQoS,
     FoldWithQoS,
     WithRetain,
+    Retain (..),
     WithNoLocal,
     FoldWithRetain,
     toTopicPieces,
@@ -264,7 +265,11 @@ data UserProperty (sym :: Symbol) (a :: Type)
 -- | QoS values for publishing and subscribing.
 data QoS = QoS0 | QoS1 | QoS2 deriving (Bounded, Enum, Eq, Show, Ord, Generic)
 
+data Retain = Retain | NoRetain
+  deriving Eq
+
 $(genSingletons [''QoS])
+$(genSingletons [''Retain])
 
 type FoldWithQoS mods = FoldWithQoS' 'QoS0 mods
 
@@ -273,11 +278,11 @@ type family FoldWithQoS' (acc :: QoS) (mods :: [Type]) :: QoS where
   FoldWithQoS' acc (WithQoS qos ': mods) = FoldWithQoS' qos mods
   FoldWithQoS' acc (mod ': mods) = FoldWithQoS' acc mods
 
-type FoldWithRetain mods = FoldWithRetain' 'False mods
+type FoldWithRetain mods = FoldWithRetain' 'NoRetain mods
 
-type family FoldWithRetain' (acc :: Bool) (mods :: [Type]) :: Bool where
+type family FoldWithRetain' (acc :: Retain) (mods :: [Type]) :: Retain where
   FoldWithRetain' acc '[] = acc
-  FoldWithRetain' acc (WithRetain ': mods) = FoldWithRetain' 'True mods
+  FoldWithRetain' acc (WithRetain ': mods) = FoldWithRetain' 'Retain mods
   FoldWithRetain' acc (mod ': mods) = FoldWithRetain' acc mods
 
 -- | An empty API: one which serves nothing. Morally speaking, this should be

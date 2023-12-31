@@ -47,8 +47,6 @@ library
     , async
 
 
-  if impl(ghc >= 9)
-    build-depends: singletons-base
   hs-source-dirs:      src
   default-language:    Haskell2010
 
@@ -111,5 +109,4 @@ test-suite net-mqtt-typed-integration-test
     filepath,
     exceptions,
     port-utils,
-    mtl,
     retry

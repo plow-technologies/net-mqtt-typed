@@ -17,8 +17,9 @@ module Main (main, spec) where
 import Control.Concurrent
 import Control.Concurrent.Async
 import Control.Exception (IOException, throwIO)
+import Control.Monad
+import Control.Monad.IO.Class (MonadIO)
 import Control.Monad.Catch
-import Control.Monad.Cont
 import Control.Retry
 import Data.Aeson
 import Data.Functor.Contravariant (contramap)

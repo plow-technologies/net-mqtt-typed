@@ -57,12 +57,6 @@ module Network.MQTT.Typed.Subscriber
   )
 where
 
-#if __GLASGOW_HASKELL__ < 900
-import Data.Singletons.Prelude ()
-#else
-import Prelude.Singletons ()
-#endif
-
 import Control.Concurrent.Async (link, withAsync)
 import Control.Concurrent.STM
   ( atomically,
@@ -440,7 +434,7 @@ instance
             PublishResponse
               { prTopic,
                 prBody = serialize @encoding a,
-                prRetain = demote @(FoldWithRetain mods),
+                prRetain = demote @(FoldWithRetain mods) == Retain,
                 prQoS = toMqttQos (demote @(FoldWithQoS mods)),
                 prProps = [PropCorrelationData x | PropCorrelationData x <- _pubProps]
               }

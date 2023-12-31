@@ -1,0 +1,17 @@
+packages:
+  ./net-mqtt-typed
+  ./net-mqtt-typed-pubsub
+
+source-repository-package
+    type: git
+    location: https://github.com/plow-technologies/net-mqtt-extra.git
+    tag: d365f7482497026f7c7c02ddfb23bd76d63a8cf2
+    --sha256: sha256-i2pmxZmuhDNCWvOHaqk6+lf14fFop0BN7ln2ca12QIs=
+
+allow-newer:
+  net-mqtt:*,
+  plow-log:*,
+  plow-log-async:*,
+
+tests: True
+benchmarks: True
