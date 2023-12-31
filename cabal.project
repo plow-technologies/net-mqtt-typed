@@ -5,8 +5,8 @@ packages:
 source-repository-package
     type: git
     location: https://github.com/plow-technologies/net-mqtt-extra.git
-    tag: d365f7482497026f7c7c02ddfb23bd76d63a8cf2
-    --sha256: sha256-i2pmxZmuhDNCWvOHaqk6+lf14fFop0BN7ln2ca12QIs=
+    tag: cad6b8c9b9adf48c15ff44cf24a6f4594bafd9a4
+    --sha256: sha256-lHZKJpjDR3slpC63eUAvxNoQL7eMX58bLLVSfXWEKBs=
 
 allow-newer:
   net-mqtt:*,
